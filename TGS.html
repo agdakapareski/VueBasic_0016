@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="vue.js"></script>
+    <title>TGS Vue Basic</title>
+
+    <style> 
+        div.myCard { 
+            padding:5px; 
+            width: 900px; 
+            height: 200px; 
+            overflow: auto; 
+            text-align:justify; 
+        } 
+    </style> 
+    
+</head>
+<body>
+    <div id="app">
+            <nav class="navbar navbar-light bg-light">
+                <div class="container">
+                    <div class="row">
+                        <div class="col"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span class="navbar-brand mb-0 h1 text-black">{{ navbar }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col"></div>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col"></div>
+                    <div class="col myCard" v-show="condition">
+                    
+                        <div style="width: 100%;">
+                            <div v-for="(ind,index) in list" :key="index">
+                                <div class="card my-2">
+                                    <div class="card-body">
+                                        <span class="float-right"><button class="btn btn-sm" @click="hapus(index)"><i class="fa fa-times-circle-o" aria-hidden="true"></i></button></span>
+                                        <span v-if="ind.prioritas == 'Penting'" class="text-success">{{ ind.prioritas }}</span>
+                                        <span v-else-if="ind.prioritas == 'Biasa'" class="text-warning">{{ ind.prioritas }}</span>
+                                        <span v-else-if="ind.prioritas == 'Tidak Penting'" class="text-danger">{{ ind.prioritas }}</span>
+                                        <br>
+                                        <h4>{{ ind.kerja }}</h4>
+                                        <p>{{ ind.catatan }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col"></div>
+                    
+                </div>
+                <div class="row" style="margin-top: 6%;">
+                    <div class="col"></div>
+                    <div class="col border border-white p-5 rounded shadow">
+                        <div class="form-group">
+                            <b><label  for="inputKerja">Apa yang mau kamu kerjakan ?</label></b>
+                            <input type="text" class="form-control rounded" v-model="inputKerja" placeholder="Apa yang mau kamu kerjakan">
+                        </div>
+                        
+                        <div class="form-group">
+                            <b><label  for="inputPrioritas">Penting ga ?</label></b>
+                            <select name="prioritas"  v-model="inputPrioritas" class="form-control">
+                                <option value="Penting">Penting</option>
+                                <option value="Biasa">Biasa</option>
+                                <option value="Tidak Penting">Tidak Penting</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <b><label for="inputCatatan">Catatan</label></b>
+                            <textarea type="text" class="form-control rounded" v-model="inputCatatan" placeholder="Catatan"></textarea>
+                                
+                        </div>
+
+                        <button class="btn btn-block btn-primary rounded" @click="save"><b>SIMPAN</b></button>
+                        <button class="btn btn-block btn-success rounded" @click="reset"><b>RESET</b></button>
+                        
+                    </div>
+                    <div class="col"></div>
+                </div>
+            </div>
+            <nav class="navbar navbar-light bg-light" style="margin-top: 6%">
+                <div class="container">
+                    <div class="row">
+                        <div class="col"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <span class="navbar-brand mb-0 h1 text-black">{{ `${footer.nama}  |  ${footer.npm}  |  ${footer.kelas}` }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col"></div>
+                    </div>
+                </div>
+            </nav>
+    </div>
+</body>
+
+<script>
+    new Vue({
+        el:"#app",
+        data: {
+            condition: false,
+            inputPrioritas: "",
+            inputKerja: "",
+            inputCatatan: "",
+            navbar: "TO DO LIST",
+            footer: {
+                nama: "Laurensius Agdaka Pareski",
+                npm: "180710016",
+                kelas: "Kelas C",
+            },
+            list: [],
+        },
+        methods: {
+            save(){
+                let list = {
+                    prioritas: this.inputPrioritas,
+                    kerja: this.inputKerja,
+                    catatan: this.inputCatatan,
+                }
+
+                console.log(list.prioritas);
+               
+                this.condition=true;
+                this.inputPrioritas= "";
+                this.inputKerja= "";
+                this.inputCatatan= "";
+
+                this.list.push(list);
+                console.log(this.list);
+            },
+
+            reset(){
+                this.inputPrioritas= "";
+                this.inputKerja= "";
+                this.inputCatatan= "";
+            },
+
+            hapus(index){
+                this.list.splice(index,1);
+                if(!this.list.length)
+                {
+                    this.condition=false;
+                }
+            },
+        },
+
+    });
+</script>
+
+</html>
