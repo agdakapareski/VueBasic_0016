@@ -7,16 +7,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="vue.js"></script>
     <title>TGS Vue Basic</title>
-
-    <style> 
-        div.myCard { 
-            padding:5px; 
-            width: 900px; 
-            height: 200px; 
-            overflow: auto; 
-            text-align:justify; 
-        } 
-    </style> 
     
 </head>
 <body>
@@ -40,7 +30,7 @@
             <div class="container mt-5">
                 <div class="row">
                     <div class="col"></div>
-                    <div class="col myCard" v-show="condition">
+                    <div class="col todolist" v-show="condition">
                     
                         <div style="width: 100%;">
                             <div v-for="(ind,index) in list" :key="index">
@@ -109,6 +99,16 @@
             </nav>
     </div>
 </body>
+
+<style> 
+    div.todolist { 
+        padding:5px; 
+        width: 900px; 
+        height: 400px; 
+        overflow: auto; 
+        text-align:justify; 
+    } 
+</style> 
 
 <script>
     new Vue({
